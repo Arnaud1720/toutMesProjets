@@ -1,0 +1,100 @@
+
+CREATE SEQUENCE public.facturation_numerofacture_seq_2;
+
+CREATE TABLE public.Facturation (
+                NumeroFacture INTEGER NOT NULL DEFAULT nextval('public.facturation_numerofacture_seq_2'),
+                CONSTRAINT facturation_pk PRIMARY KEY (NumeroFacture)
+);
+
+
+ALTER SEQUENCE public.facturation_numerofacture_seq_2 OWNED BY public.Facturation.NumeroFacture;
+
+CREATE SEQUENCE public.stock_idingrediant_seq;
+
+CREATE TABLE public.Stock (
+                Idingrediant INTEGER NOT NULL DEFAULT nextval('public.stock_idingrediant_seq'),
+                MatierePremiere VARCHAR NOT NULL,
+                StockUnitaire INTEGER NOT NULL,
+                StockRestant VARCHAR NOT NULL,
+                StockTotal VARCHAR NOT NULL,
+                CONSTRAINT stock_pk PRIMARY KEY (Idingrediant)
+);
+
+
+ALTER SEQUENCE public.stock_idingrediant_seq OWNED BY public.Stock.Idingrediant;
+
+CREATE TABLE public.Point_de_vente (
+                adresse_Pizzeria VARCHAR NOT NULL,
+                date_Creation DATE NOT NULL,
+                recette_Pizzeria REAL NOT NULL,
+                CONSTRAINT point_de_vente_pk PRIMARY KEY (adresse_Pizzeria)
+);
+
+
+CREATE TABLE public.Carte (
+                nos_Pizzas ARRAY NOT NULL,
+                CONSTRAINT carte_pk PRIMARY KEY (nos_Pizzas)
+);
+
+
+CREATE SEQUENCE public.commande_commande_id_seq;
+
+CREATE TABLE public.Commande (
+                commande_ID INTEGER NOT NULL DEFAULT nextval('public.commande_commande_id_seq'),
+                montant_Total REAL NOT NULL,
+                resume_Commande VARCHAR NOT NULL,
+                prix_Commande REAL NOT NULL,
+                Quantite INTEGER NOT NULL,
+                mode_Paimment OTHER NOT NULL,
+                CONSTRAINT commande_pk PRIMARY KEY (commande_ID)
+);
+
+
+ALTER SEQUENCE public.commande_commande_id_seq OWNED BY public.Commande.commande_ID;
+
+CREATE TABLE public.Employe (
+                Role ARRAY NOT NULL,
+                NumeroFacture INTEGER NOT NULL,
+                commande_ID INTEGER NOT NULL,
+                Date_Emboche DATE NOT NULL,
+                Prenom VARCHAR NOT NULL,
+                Nom INTEGER NOT NULL,
+                Login VARCHAR NOT NULL,
+                MotDePasse VARCHAR(255) NOT NULL,
+                CONSTRAINT employe_pk PRIMARY KEY (Role, NumeroFacture, commande_ID)
+);
+
+
+CREATE TABLE public.Client (
+                commande_Id INTEGER NOT NULL,
+                Nom VARCHAR NOT NULL,
+                Prenom VARCHAR NOT NULL,
+                adresse_Cli INTEGER NOT NULL,
+                numero_Telephone REAL NOT NULL,
+                date_Inscription DATE NOT NULL,
+                adresse_Postale VARCHAR NOT NULL,
+                NumeroFacture INTEGER NOT NULL,
+                CONSTRAINT client_pk PRIMARY KEY (commande_Id)
+);
+
+
+ALTER TABLE public.Client ADD CONSTRAINT facturation_client_fk
+FOREIGN KEY (adresse_Cli)
+REFERENCES public.Facturation (NumeroFacture)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.Client ADD CONSTRAINT commande_client_fk
+FOREIGN KEY (commande_Id)
+REFERENCES public.Commande (commande_ID)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.Employe ADD CONSTRAINT commande_employe_fk
+FOREIGN KEY (Nom)
+REFERENCES public.Commande (commande_ID)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;

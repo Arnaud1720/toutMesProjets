@@ -1,0 +1,61 @@
+.menu 
+{
+color : #5992C4; /* commentaire : ref a une class " .class"  */
+}
+a:hover
+{
+	color:green;
+}
+
+a:visited
+{
+	color : #888888
+}
+
+body
+{
+	background-color : #FFFFFF;
+	background-image: url("Images/Montagne.jpg");
+	background-attachement:fixed;
+	background-repeat:no-repeat;
+	 height: 80vh;
+	 width: 100	%;
+	 background-size:cover
+	 
+}
+h1
+{
+	color : black; 
+	border: 3px blue solid;
+	border-radius: 15px; /*plus la valeur est élevée plus l'arondi est fort */ 
+	text-shadow: 6px,6px,0px black; /*1er paramètre horizontal de l'ombre, vertical de l'ombre, dégradé,couleur */
+}
+ul
+{
+	color : green;
+	
+}
+#cuisine 
+{
+	color : yellow; /* commentaire : ref a un id " #Idname"  */
+}
+.annimaux
+{
+	color: lime ;
+}
+.P1
+{
+	color: salmon;
+}
+.P2
+{
+	color: cyan;
+}
+p
+{
+	font-size: 1.1em;
+	
+	/*font-family: Impact, "Arial Black", Arial, Verdana, sans-serif;*/
+
+}
+
